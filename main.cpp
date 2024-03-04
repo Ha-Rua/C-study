@@ -5,13 +5,16 @@ int main()
     int n,k;
     cin>>n>>k;
     int result=0;
-    while(n!=1){
-        if(n%k==0)
-            n/=k;
-        else
-            n--;
+    while(true){
+        int target=n/k*k;
+        result +=(n-target);
+        n=target;
+        if (n<k)
+            break;
         result++;
+        n/=k;
     }
+    result+=(n-1);
     cout<<result<<'\n';
     return 0;
 }
