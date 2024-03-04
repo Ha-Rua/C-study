@@ -3,18 +3,22 @@
 using namespace std;
 int main()
 {
-    int n,m,k,sum=0;
-    cin>>n>>m>>k;
-    int* arr = new int[n];
+    int n,m;
+    cin>>n>>m;
+    int** array = new int*[n];
     for(int i=0;i<n;i++)
-    {
-        cin>>arr[i];
+        array[i] = new int[m];
+    for(int i=0;i<n;i++){
+        for (int j=0;j<m;j++)
+            cin>>array[i][j];
     }
-    sort(arr, arr+n);
-    int count = (m/(k+1))*k;
-    count += m%(k+1);
-    sum += arr[n-1]*count;
-    sum += arr[n-2]*(m-count);
-    cout << sum << '\n';
+    int target=0;
+    for (int i=0;i<n;i++)
+    {
+        sort(array[i],array[i]+m);
+        if(array[i][0]>target)
+            target=array[i][0];
+    }
+    cout << target;
     return 0;
 }
