@@ -1,0 +1,40 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+class info{
+    public:
+        string name;
+        int age;
+        info(int a, string n){
+            age = a;
+            name = n;
+        }
+        bool operator<(const info& a) const {
+            return this->age<a.age;
+        };
+};
+int main()
+{
+    ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+    int n;
+    cin>>n;
+    vector<info> v;
+    v.reserve(n);
+    for(int i=0;i<n;i++)
+    {
+        string name;
+        int age;
+        cin>>age>>name;
+        v.push_back(info(age, name));
+    }
+    stable_sort(v.begin(),v.end());
+    for(int i=0;i<n;i++)
+    {
+        cout<<v[i].age<<" "<<v[i].name<<'\n';
+    }
+    return 0;
+}
