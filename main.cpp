@@ -1,60 +1,45 @@
-#define _CRT_SECURE_NO_WARNINGS 
 #include <iostream>
-#include <string>
 using namespace std;
-class Car {
+template <class T>
+class Array{
     private:
-        int num;
-        double gas;
-        char* pName;
+        T data[5];
     public:
-        Car(char* pN, int n, double g);
-        Car(const Car& c);
-        Car& operator=(const Car& c);
-        ~Car();
-        void show();
+        void setdata(int num, T d);
+        T getdata(int num);
 };
-Car::Car(char* pN, int n, double g) {
-    pName = new char[strlen(pN) + 1];
-    strcpy(pName, pN);
-    num = n;
-    gas = g;
-    cout << pName << "(번호 : " << num << ", 연료량 : " << gas << ") 생산 완료"  << '\n';
+template <class T>
+void Array<T>::setdata(int num, T d){
+    if(num<0||num>4)
+        cout<<"올바른 값이 아닙니다. \n";
+    else
+        data[num]=d;
 }
-Car::Car(const Car& c) {
-    cout<< c.pName << "으로 초기화 \n";
-    pName = new char[strlen(c.pName) + strlen("의 복사본 1") + 1];
-    strcpy(pName, c.pName);
-    strcat(pName, "의 복사본 1");
-    num = c.num;
-    gas = c.gas;
+template <class T>
+T Array<T>::getdata(int num){
+    if(num<0||num>4)
+        cout<<"올바른 값이 아닙니다. \n";
+    else
+        return data[num];
 }
-Car& Car::operator=(const Car& c){
-    cout<< pName << "에 " << c.pName << "을 대입 \n";
-    if (this != &c) {
-        delete[] pName;
-        pName = new char[strlen(c.pName) + strlen("의 복사본 2") + 1];
-        strcpy(pName, c.pName);
-        strcat(pName, "의 복사본 2");
-        num = c.num;
-        gas = c.gas;
-    }
-}
-
-Car::~Car() {
-    cout << pName << " 소멸 \n";
-    delete[] pName;
-}
-void Car::show() {
-    cout << "이름 : " << pName << ", 번호 : " << num << ", 연료량 : " << gas << '\n';
-}
-int main() {
-    Car benz("benz", 1234, 25.5);
-    benz.show();
-    Car benz2 = benz;
-    benz2.show();
-    Car benz3("benz3",0,0);
-    benz3 = benz;
-    benz3.show();
+int main(){
+    cout<< "int형 배열 생성 \n";
+    Array<int> i_array;
+    i_array.setdata(0,80);
+    i_array.setdata(1,90);
+    i_array.setdata(2,100);
+    i_array.setdata(3,110);
+    i_array.setdata(4,120);
+    cout<< "double형 배열 생성 \n";
+    for (int i=0;i<5;i++)
+        cout<<i_array.getdata(i)<<'\n';
+    Array<double> d_array;
+    d_array.setdata(0,80.5);
+    d_array.setdata(1,90.5);
+    d_array.setdata(2,100.5);
+    d_array.setdata(3,110.5);
+    d_array.setdata(4,120.5);
+    for(int i=0;i<5;i++)
+        cout<<d_array.getdata(i)<<'\n';
     return 0;
 }
