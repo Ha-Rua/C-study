@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+#include <iomanip>
+using namespace std;
+int main()
+{
+    int n;
+    cin>>n;
+    for(int i=1;i<=n;i++)
+    {
+        int m,sum=0;
+        cin>>m;
+        vector<int> v(m);
+        for(int j=0;j<m;j++)
+        {
+            cin>>v[j];
+            sum+=v[j];
+        }
+        int overaverage=0;
+        double average=double(sum)/double(m);
+        for(int j=0;j<m;j++)
+        {
+            if(v[j]>average)
+                overaverage++;
+        }
+        cout<<fixed<<setprecision(3)<<double(overaverage)/double(m)*100<<'%'<<'\n';
+    }
+    return 0;
+}
