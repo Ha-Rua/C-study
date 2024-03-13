@@ -1,0 +1,23 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    int n;
+    cin >> n;
+    int* rope = new int[n];
+    for(int i = 0; i < n; i++)
+        cin >> rope[i];
+    sort(rope, rope+n, greater<int>());
+    int maxweight = 0, curweight = 0;
+    int curropenumber = 0;
+    for(int i = 0; i < n; i++){
+        curweight = rope[curropenumber]*(curropenumber+1);
+        if(curweight>=maxweight)
+            maxweight = curweight;
+        curropenumber++;
+    }
+    cout << maxweight;
+    delete[] rope;
+    return 0;
+}
