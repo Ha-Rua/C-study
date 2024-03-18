@@ -2,9 +2,13 @@
 #include <fstream>
 #include <iomanip>
 using namespace std;
-int main()
+int main(int argc, char* argv[])
 {
-    ifstream fin("test2.txt");
+    if(argc != 2){
+        cout << "인수의 개수가 올바르지 않음 \n";
+        return 1;
+    }
+    ifstream fin(argv[1]);
     if(!fin){
         cout << "파일을 열 수 없음 \n";
         return 1;
