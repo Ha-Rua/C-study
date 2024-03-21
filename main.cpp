@@ -1,34 +1,25 @@
 #include <iostream>
-#include <fstream>
-#include <iomanip>
+#include <utility>
 using namespace std;
-int main(int argc, char* argv[])
+int main()
 {
-    if(argc != 2){
-        cout << "인수의 개수가 올바르지 않음 \n";
-        return 1;
+    char px[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+    pair<char, int> position;
+    cin >> position.first >> position.second;
+    int dx, dy;
+    for (int i = 0; i < 8; i++) {
+        if (px[i] == position.first)
+            dx = i + 1;
     }
-    ifstream fin(argv[1]);
-    if(!fin){
-        cout << "파일을 열 수 없음 \n";
-        return 1;
+    dy = position.second;
+    int res = 0;
+    int movex[8] = {1,1,2,2,-1,-1,-2,-2};
+    int movey[8] = {2,-2,1,-1,2,-2,1,-1};
+    for (int i = 0; i < 8; i++) {
+        if(dx + movex[i]<1 || dx + movex[i]>8 || dy + movey[i]<1 || dy + movey[i]>8)
+            continue;
+        res++;
     }
-    const int  num = 8;
-    int score[num];
-    for(int i=0; i<num; i++){
-        fin >> score[i];
-    }
-    int max = score[0];
-    int min = score[0];
-    for(int i=0; i<num; i++){
-        if(max < score[i])
-            max = score[i];
-        if(min > score[i])
-            min = score[i];
-        cout << i+1 << "번째 사람의 시험 점수 : " << score[i] << '\n';
-    }
-    cout << "최고 점수 : " << max << '\n';
-    cout << "최저 점수 : " << min << '\n';
-    fin.close();
+    cout << res;
     return 0;
 }
