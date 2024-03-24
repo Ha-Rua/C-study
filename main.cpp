@@ -20,29 +20,34 @@ int main()
     while(true)
     {
         int turn_cnt=0;
-        turn_left(d);
-        int nx = a + dx[d];
-        int ny = b + dy[d];
-        if(map[nx][ny] == 0 && check[nx][ny] == 0)
+        while(turn_cnt<4)
         {
-            check[nx][ny] = 1;
-            a = nx;
-            b = ny;
-            res++;
-            turn_cnt = 0;
-            continue;
+            turn_left(d);
+            int nx = a + dx[d];
+            int ny = b + dy[d];
+            if(map[nx][ny] == 0 && check[nx][ny] == 0)
+            {
+                check[nx][ny] = 1;
+                a = nx;
+                b = ny;
+                res++;
+                break;
+            }
+            else turn_cnt++;
         }
-        else turn_cnt++;
+        
         if(turn_cnt == 4)
         {
-            nx = a - dx[d];
-            ny = b - dy[d];
+            int nx = a - dx[d];
+            int ny = b - dy[d];
             if(map[nx][ny] == 0)
             {
                 a = nx;
                 b = ny;
             }
-            else break;
+            else {
+                break;
+            }
             turn_cnt = 0;
         }
     }
