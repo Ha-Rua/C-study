@@ -1,0 +1,22 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+int main()
+{
+    int res = 0;
+    int num;
+    cin >> num;
+    string str = to_string(num);
+    int len = str.length();
+    int dig = int(pow(10,len-1));
+    res = len * (num % dig);
+    int cnt = 1;
+    for (int i=1; i<len; i++)
+    {
+        res += cnt * (9 * int(pow(10,cnt-1)));
+        cnt++;
+    }
+    res += ((num-num%dig)-int(pow(10,cnt-1))+1)*len;
+    cout << res;
+    retu
