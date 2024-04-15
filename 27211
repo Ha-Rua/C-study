@@ -1,0 +1,55 @@
+#include <iostream>
+#include <queue>
+#include <algorithm>
+using namespace std;
+int graph[1001][1001];
+int n, m;
+int dx[4] = {0,1,0,-1};
+int dy[4] = {1,0,-1,0};
+void BFS(int a, int b);
+int main()
+{
+    cin >> n >> m;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+            cin >> graph[i][j];
+    }
+    int res = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (graph[i][j] == 0)
+            {
+                BFS(i, j);
+                res++;
+            }
+        }
+    }
+    cout << res;
+    return 0;
+}
+void BFS(int a, int b)
+{
+    int area = 0;
+    queue<pair<int, int>> q;
+    q.push({a,b});
+    graph[a][b] = 1;
+    while (!q.empty())
+    {
+        auto[x, y] = q.front();
+        q.pop();
+        area++;
+        for (int i = 0; i < 4; i++)
+        {
+            int nx = (x + dx[i] + n) % n;
+            int ny = (y + dy[i] + m) % m;
+            if (graph[nx][ny] == 0)
+            {
+                q.push({nx,ny});
+                graph[nx][ny] = 1;
+            }
+        }
+    }
+}
