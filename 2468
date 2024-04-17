@@ -1,0 +1,69 @@
+#include <iostream>
+#include <cstring>
+#include <queue>
+using namespace std;
+int board[101][101];
+bool check[101][101];
+int dx[4] = {0,1,0,-1};
+int dy[4] = {1,0,-1,0};
+int l;
+void BFS(int a, int b);
+int main()
+{
+    cin >> l;
+    for (int i = 0; i < l; i++)
+        for (int j = 0; j < l; j++)
+            cin >> board[i][j];
+    int k = 1, max = 0;
+    while(k < 101)
+    {
+        for (int i = 0; i < l; i++)
+        {
+            for (int j = 0; j < l; j++)
+            {
+                if (board[i][j] < k)
+                {
+                    check[i][j] = true;
+                }
+            }
+        }
+        int cnt = 0;
+        for (int i = 0; i < l; i++)
+        {
+            for (int j = 0; j < l; j++)
+            {
+                if (check[i][j] == false)
+                {
+                    BFS(i, j);
+                    cnt++;
+                }
+            }
+        }
+        max = max > cnt ? max : cnt;
+        memset(check, false, sizeof(check));
+        k++;
+    }
+    cout << max;
+    return 0;
+}
+void BFS(int a, int b)
+{
+    queue<pair<int, int>> q;
+    q.push(make_pair(a, b));
+    check[a][b] = true;
+    while (!q.empty())
+    {
+        auto[x, y] = q.front();
+        q.pop();
+        for (int i = 0; i < 4; i++)
+        {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if (nx >= 0 && nx < l && ny >= 0 && ny < l && check[nx][ny] == false)
+            {
+                q.push(make_pair(nx, ny));
+                check[nx][ny] = true;
+            }
+        }
+    }
+}
