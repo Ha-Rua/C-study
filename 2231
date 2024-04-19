@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    int k = 0, d, res;
+    do
+    {
+        k++;
+        if (k >= n)
+        {
+            cout << 0;
+            return 0;
+        }
+        d = k;
+        res = d;
+        while(d)
+        {
+            res += d % 10;
+            d /= 10;
+        }
+    } while (n != res);
+    cout << k;
+    return 0;
+}
