@@ -1,0 +1,24 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    int twocount = 0, fivecount = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        int a = i, b = i;
+        while(a % 2 == 0)
+        {
+            twocount++;
+            a /= 2;
+        }
+        while(b % 5 == 0)
+        {
+            fivecount++;
+            b /= 5;
+        }
+    }
+    cout << min(twocount, fivecount);
+    return 0;
+}
