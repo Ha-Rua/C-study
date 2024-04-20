@@ -1,0 +1,72 @@
+#include <iostream>
+#include <queue>
+#include <cstring>
+using namespace std;
+int n, m;
+int graph[1001][1001];
+int dx[4] = { 0,0,1,-1 };
+int dy[4] = { 1,-1,0,0 };
+void BFS(int a, int b);
+int main()
+{
+	cin >> n >> m;
+	memset(graph, -1, sizeof(graph));
+	int a, b;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			int x; cin >> x;
+			graph[i][j] = x - 1;
+			if (graph[i][j] == 1)
+			{
+				a = i;
+				b = j;
+			}
+		}
+	}
+	BFS(a, b);
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			if (graph[i][j] == -1)
+				graph[i][j] = 0;
+			else if (graph[i][j] == 0)
+				graph[i][j] = -1;
+		}
+	}
+	graph[a][b] = 0;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			cout << graph[i][j] << ' ';
+		}
+		cout << '\n';
+	}
+	return 0;
+}
+void BFS(int a, int b)
+{
+	graph[a][b] = 0;
+	queue<pair<int, int>> q;
+	q.push(make_pair(a, b));
+	while (!q.empty())
+	{
+		int x = q.front().first;
+		int y = q.front().second;
+		q.pop();
+		for (int i = 0; i < 4; i++)
+		{
+			int nx = x + dx[i];
+			int ny = y + dy[i];
+			if (nx >= 0 && nx < n && ny >= 0 && ny < m && graph[nx][ny] == 0)
+			{
+				q.push(make_pair(nx, ny));
+				graph[nx][ny] = graph[x][y] + 1;
+			}
+		}
+	}
+	graph[a][b] = 0;
+}
