@@ -1,0 +1,43 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+int binary_search(vector<int>& v, int target, int start, int end);
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n; cin >> n;
+    vector<int> a;
+    for (int i = 0; i < n; i++)
+    {
+        int x; cin >> x;
+        a.push_back(x);
+    }
+    sort(a.begin(), a.end());
+    int m; cin >> m;
+    for (int i = 0; i < m; i++)
+    {
+        int x; cin >> x;
+        int res = binary_search(a, x, 0, n - 1);
+        if (res != -1)
+            cout << 1 << ' ';
+        else
+            cout << 0 << ' ';
+    }
+    return 0;
+}
+int binary_search(vector<int>& v, int target, int start, int end)
+{
+    while (start <= end)
+    {
+        int mid = (start + end) / 2;
+        if (v[mid] == target)
+            return mid;
+        else if (v[mid] > target)
+            end = mid - 1;
+        else
+            start = mid + 1;
+    }
+    return -1;
+}
