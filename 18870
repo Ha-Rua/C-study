@@ -1,0 +1,38 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+int bin_search(vector<int>& v, int target, int start, int end)
+{
+    while (start <= end)
+    {
+        int mid = (start + end) / 2;
+        if (v[mid] == target)
+            return mid;
+        else if (v[mid] < target)
+            start = mid + 1;
+        else
+            end = mid - 1;
+    }
+    return -1;
+}
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    int n; cin >> n;
+    vector<int> a(n), b(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+        b[i] = a[i];
+    }
+    sort(b.begin(), b.end());
+    b.erase(unique(b.begin(), b.end()), b.end());
+    for (int i = 0; i < n; i++)
+    {
+        int index = bin_search(b, a[i], 0, b.size() - 1);
+        cout << index << ' ';
+    }
+    return 0;
+}
