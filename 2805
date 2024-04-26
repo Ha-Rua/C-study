@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using lint = long long int;
+using namespace std;
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+    vector<lint> a(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+    lint start = 0;
+    lint end = *max_element(a.begin(), a.end());
+    lint res = 0;
+    while (start <= end)
+    {
+        lint total = 0;
+        lint mid = (start + end) / 2;
+        for (int i = 0; i < n; i++)
+        {
+            total += max(lint(0), a[i] - mid);
+        }
+        if (total >= m)
+        {
+            res = mid;
+            start = mid + 1;
+        }
+        else
+        {
+            end = mid - 1;
+        }
+    }
+    cout << res;
+    return 0;
+}
