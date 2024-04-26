@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+typedef long long ll;
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    int n, m; cin >> n;
+    vector<ll> v(n);
+    for(int i = 0; i < n; i++)
+        cin >> v[i];
+    cin >> m;
+    ll res = 0;
+    ll sum = 0;
+    for (ll i : v) sum += i;
+    if (sum <= m) res = *max_element(v.begin(), v.end());
+    else
+    {
+        ll start = 0;
+        ll end = *max_element(v.begin(), v.end());
+        while (start <= end)
+        {
+            ll mid = (start + end) / 2;
+            ll sum = 0;
+            for (ll i : v) sum += min(i, mid);
+            if (sum <= m)
+            {
+                res = mid;
+                start = mid + 1;
+            }
+            else
+                end = mid - 1;
+        }
+    }
+    cout << res;
+    return 0;
+}
