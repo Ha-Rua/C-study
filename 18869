@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    int n, m; cin >> n >> m;
+    vector<vector<int>> a(n);
+    vector<vector<int>> temp(n);
+    for (int i = 0; i < n; i++)
+    {
+        a[i].resize(m);
+        temp[i].resize(m);
+        for (int j = 0; j < m; j++)
+        {            
+            cin >> a[i][j];
+            temp[i][j] = a[i][j];
+        }
+        sort(temp[i].begin(), temp[i].end());
+        temp[i].erase(unique(temp[i].begin(), temp[i].end()), temp[i].end());
+        for(int j = 0; j < m; j++)
+        {
+            a[i][j] = lower_bound(temp[i].begin(), temp[i].end(), a[i][j]) - temp[i].begin() + 1;
+        }
+    }
+    int res = 0;
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            bool check = true;
+            for (int k = 0; k < m; k++)
+            {
+                if(a[i][k] != a[j][k])
+                {
+                    check = false;
+                    break;
+                }
+            }
+            if (check) res++;
+        }
+    }
+    cout << res;
+    return 0;
+}
