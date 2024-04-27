@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    while (true)
+    {
+        int n; cin >> n;
+        if (n == 0) break;
+        vector<int> a(n);
+        for (int i = 0; i < n; i++)
+        {
+            cin >> a[i];
+        }
+        int m; cin >> m;
+        vector<int> b(m);
+        for (int i = 0; i < m; i++)
+        {
+            cin >> b[i];
+        }
+        int res = 0;
+        int acur = 0;
+        int asum = 0;
+        int bcur = 0;
+        int bsum = 0;
+        while (acur < n && bcur < m)
+        {
+            if (a[acur] < b[bcur]) asum += a[acur++];
+            else if (a[acur] > b[bcur]) bsum += b[bcur++];
+            else
+            {
+                asum += a[acur++];
+                bsum += b[bcur++];
+                res += max(asum, bsum);
+                asum = 0;
+                bsum = 0;
+            }
+        }
+        while (acur < n) asum += a[acur++];
+        while (bcur < m) bsum += b[bcur++];
+        res += max(asum, bsum);
+        cout << res << '\n';
+    }
+}
