@@ -1,0 +1,24 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int main()
+{
+    int n; cin >> n;
+    vector<int> v(n);
+    for(int i = 0;i < n;i++)
+        cin >> v[i];
+    long long res = 1;
+    int cur = 1;
+    for (int i = n - 2;i >= 0;i--)
+    {
+        if(v[i] <= cur)
+        {
+            cur = v[i];
+            res += cur;
+        }
+        else
+            res += ++cur;
+    }
+    cout << res;
+    return 0;
+}
