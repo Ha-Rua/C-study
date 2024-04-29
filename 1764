@@ -1,0 +1,22 @@
+#include <iostream>
+#include <string>
+#include <set>
+using namespace std;
+int main()
+{
+    int n, m; cin >> n >> m;
+    set<string> a, result;
+    for(int i = 0; i < n; i++)
+    {
+        string s; cin >> s;
+        a.insert(s);
+    }
+    for(int i = 0; i < m; i++)
+    {
+        string s; cin >> s;
+        if(a.find(s) != a.end()) result.insert(s);
+    }
+    cout << result.size() << '\n';
+    for(string s : result) cout << s << '\n';
+    return 0;
+}
