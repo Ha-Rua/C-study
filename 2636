@@ -1,0 +1,105 @@
+#include <iostream>
+using namespace std;
+int dx[4] = {1,-1,0,0};
+int dy[4] = {0,0,1,-1};
+pair<int, bool> graph[101][101];
+int n, m;
+void aDFS(int a, int b);
+int main()
+{
+    cin >> n >> m;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            cin >> graph[i][j].first;
+        }
+    }
+    int area = 0;
+    int result = 0;
+    while (true)
+    {
+        int cur = 0;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (graph[i][j].first == 0)
+                {
+                    aDFS(i, j);
+                }
+            }
+        }
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (graph[i][j].first == 1)
+                {
+                    for (int k = 0; k < 4; k++)
+                    {
+                        if (i + dx[k] >= 0 && i + dx[k] < n && j + dy[k] >= 0 && j + dy[k] < m)
+                        {
+                            if (graph[i + dx[k]][j + dy[k]] == make_pair(0, true))
+                            {
+                                graph[i][j].second = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (graph[i][j].first == 1)
+                {
+                    cur++;
+                    if (graph[i][j].second == true)
+                    {
+                        graph[i][j].first = 0;
+                    }
+                }
+            }
+        }
+        if(cur == 0)
+        {
+            cout << result << '\n' << area;
+            break;
+        }
+        area = cur;
+        result++;
+    }
+    return 0;
+}
+void aDFS(int a, int b)
+{
+    if (a < 0 || a >= n || b < 0 || b >= m || graph[a][b].first == 1 || graph[a][b] == make_pair(0, true)) return;
+    if (a == 0 || a == n - 1 || b == 0 || b == m - 1)
+    {
+        graph[a][b].second = true;
+        for (int i = 0; i < 4; i++)
+            aDFS(a + dx[i], b + dy[i]);
+        return;
+    }
+    else
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (a + dx[i] >= 0 && b + dy[i] >= 0)
+            {
+                if (graph[a + dx[i]][b + dy[i]].second == true)
+                {
+                    graph[a][b].second = true;
+                    for (int j = 0; j < 4; j++)
+                        aDFS(a + dx[j], b + dy[j]);
+                    return;
+                }
+            }
+        }
+        return;
+    }
+    return;
+}
