@@ -1,0 +1,73 @@
+#include <iostream>
+#include <tuple>
+using namespace std;
+int graph[501][501];
+int n, m;
+int main()
+{
+    cin >> n >> m;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            cin >> graph[i][j];
+        }
+    }
+    int max = 0;
+    tuple<pair<int, int>, pair<int, int>, pair<int, int>> t[19];
+    t[0] = make_tuple(make_pair(0, 1), make_pair(1, 0), make_pair(1, 1));
+
+    t[1] = make_tuple(make_pair(0, 1), make_pair(0, 2), make_pair(0, 3));
+    t[2] = make_tuple(make_pair(1, 0), make_pair(2, 0), make_pair(3, 0));
+
+    t[3] = make_tuple(make_pair(1, 0), make_pair(2, 0), make_pair(2, 1));
+    t[4] = make_tuple(make_pair(1, 0), make_pair(1, 1), make_pair(1, 2));
+    t[5] = make_tuple(make_pair(0, 1), make_pair(0, 2), make_pair(1, 2));
+    t[6] = make_tuple(make_pair(0, 1), make_pair(1, 1), make_pair(2, 1));
+    t[7] = make_tuple(make_pair(1, 0), make_pair(2, 0), make_pair(2, -1));
+    t[8] = make_tuple(make_pair(1, 0), make_pair(1, -1), make_pair(1, -2));
+    t[9] = make_tuple(make_pair(0, -1), make_pair(0, -2), make_pair(1, -2));
+    t[10] = make_tuple(make_pair(0, -1), make_pair(1, -1), make_pair(2, -1));
+
+    t[11] = make_tuple(make_pair(1, 0), make_pair(1, 1), make_pair(2, 1));
+    t[12] = make_tuple(make_pair(0, 1), make_pair(1, 1), make_pair(1, 2));
+    t[13] = make_tuple(make_pair(1, 0), make_pair(1, -1), make_pair(2, -1));
+    t[14] = make_tuple(make_pair(0, -1), make_pair(1, -1), make_pair(1, -2));
+    
+    t[15] = make_tuple(make_pair(0, 1), make_pair(0, 2), make_pair(1, 1));
+    t[16] = make_tuple(make_pair(0, 1), make_pair(0, 2), make_pair(-1, 1));
+    t[17] = make_tuple(make_pair(1, 0), make_pair(2, 0), make_pair(1, 1));
+    t[18] = make_tuple(make_pair(1, 0), make_pair(2, 0), make_pair(1, -1));
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            for (int k = 0; k < 19; k++)
+            {
+                int cur = 0;
+                cur += graph[i][j];
+                int nx, ny;
+                pair<int, int> curcoord;
+                curcoord = get<0>(t[k]);
+                nx = curcoord.first + i;
+                ny = curcoord.second + j;
+                if (nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
+                else cur += graph[nx][ny];
+                curcoord = get<1>(t[k]);
+                nx = curcoord.first + i;
+                ny = curcoord.second + j;
+                if (nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
+                else cur += graph[nx][ny];
+                curcoord = get<2>(t[k]);
+                nx = curcoord.first + i;
+                ny = curcoord.second + j;
+                if (nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
+                else cur += graph[nx][ny];
+                max = cur > max ? cur : max;
+            }
+        }
+    }
+    cout << max;
+    return 0;
+}
