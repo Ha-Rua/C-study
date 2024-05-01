@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    int n, m; cin >> n >> m;
+    vector<int> money(n), moneysort(n);
+    for (int i = 0; i < n; i++)
+    {
+        int x; cin >> x;
+        money[i] = x;
+        moneysort[i] = x;
+    }
+    sort(moneysort.begin(), moneysort.end());
+    int res;
+    int start = moneysort[n - 1];
+    int end = 10000 * n;
+    while (start <= end)
+    {
+        int mid = (start + end) / 2;
+        int cur = 0;
+        int curmoney = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (curmoney - money[i] < 0)
+            {
+                cur++;
+                curmoney = mid;
+                if (curmoney - money[i] < 0)
+                {
+                    cur = 0;
+                    break;
+                }
+            }
+            curmoney -= money[i];
+        }
+        if (cur <= m)
+        {
+            end = mid - 1;
+            res = mid;
+        }
+        else
+        {
+            start = mid + 1;
+        }
+    }
+    cout << res;
+    return 0;
+}
