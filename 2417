@@ -1,0 +1,29 @@
+#include <iostream>
+#include <climits>
+using namespace std;
+int main()
+{
+    unsigned long long n;
+    cin >> n;
+    if (n == 0)
+    {
+        cout << 0;
+        return 0;
+    }
+    unsigned long long start = 0, end = 3037000500, res;
+    while (start <= end)
+    {
+        unsigned long long mid = (start + end) / 2;
+        if (mid * mid >= n)
+        {
+            res = mid;
+            end = mid - 1;
+        }
+        else
+        {
+            start = mid + 1;
+        }
+    }
+    cout << res;
+    return 0;
+}
