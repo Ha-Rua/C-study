@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+    long long x, y; cin >> x >> y;
+    if (x == y || (y * 100)/x == 99)
+    {
+        cout << -1;
+        return 0;
+    }
+    long long start = 1;
+    long long end = 1000000000;
+    long long cur = (y * 100)/x;
+    long long res = 1;
+    while (start <= end)
+    {
+        long long mid = (start + end) / 2;
+        if((y + mid)*100/(x + mid) - cur >= 1)
+        {
+            res = mid;
+            end = mid - 1;
+        }
+        else
+        {
+            start = mid + 1;
+        }
+    }
+    cout << res;
+    return 0;
+}
