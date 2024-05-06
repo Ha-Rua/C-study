@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+typedef long long ll;
+pair<ll, ll> fib[41] = {{1,0}, {0,1}};
+pair<ll, ll> Fibonacci(int n)
+{
+    if (n == 0) return fib[0];
+    if (n == 1) return fib[1];
+    if (fib[n].first != 0 || fib[n].second != 0) return fib[n];
+    pair<ll, ll> temp1 = Fibonacci(n - 1), temp2 = Fibonacci(n - 2);
+    fib[n].first = temp1.first + temp2.first;
+    fib[n].second = temp1.second + temp2.second;
+    return fib[n];
+}
+int main()
+{
+    int n; cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        int x; cin >> x;
+        pair<ll, ll> ans = Fibonacci(x);
+        cout << ans.first << " " << ans.second << "\n";
+    }
+    return 0;
+}
