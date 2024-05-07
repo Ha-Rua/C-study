@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+bool prime[1000001];
+int main()
+{
+    int x, y; cin >> x >> y;
+    if (x == 1) x++;
+    for (int i = 2; i*i <= y; i++)
+    {
+        if(prime[i] == false)
+        {
+            for (int j = 2; i*j <= y; j++)
+            {
+                prime[i*j] = true;
+            }
+        }
+    }
+    for (int i = x; i <= y; i++)
+    {
+        if(prime[i] == false)
+        {
+            cout << i << '\n';
+        }
+    }
+}
