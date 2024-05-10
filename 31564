@@ -1,0 +1,44 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+int graph[1001][1001];
+int n, m;
+int dx1[6] = {-1, -1, 0, 0, 1, 1}, dy1[6] = {-1, 0, -1, 1, -1, 0}, dy2[6] = {0, 1, -1, 1, 0, 1};
+void bfs(int n, int m);
+int main()
+{
+    cin >> n >> m;
+    int k; cin >> k;
+    for (int i = 0; i < k; i++)
+    {
+        int a, b; cin >> a >> b;
+        graph[a][b] = -1;
+    }
+    bfs(0, 0);
+    cout << ((graph[n - 1][m - 1] == 0) ? -1 : graph[n - 1][m - 1] - 1);
+    return 0;
+}
+void bfs(int a, int b)
+{
+    queue<pair<int, int>> q;
+    graph[a][b] = 1;
+    q.push(make_pair(a, b));
+    while (!q.empty())
+    {
+        int x = q.front().first;
+        int y = q.front().second;
+        q.pop();
+        for (int i = 0; i < 6; i++)
+        {
+            int nx = x + dx1[i];
+            int ny = ((x % 2 == 0) ? y + dy1[i] : y + dy2[i]);
+            if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+            if (graph[nx][ny] == 0)
+            {
+                graph[nx][ny] = graph[x][y] + 1;
+                q.push(make_pair(nx, ny));
+            }
+        }
+    }
+    return;
+}
