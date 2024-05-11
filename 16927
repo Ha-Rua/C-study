@@ -1,0 +1,85 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int arr[301][301];
+pair<int, int> directions[4] = {{1, 0}, {0, 1}, {-1, 0},{0, -1}};
+int n, m, r, d;
+void arrspin();
+int main()
+{
+    cin >> n >> m >> r;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            cin >> arr[i][j];
+        }
+    }
+    d = min(m, n) / 2;
+    arrspin();
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            cout << arr[i][j] << " ";
+        }
+        cout << '\n';
+    }
+}
+void arrspin()
+{
+    int temparr[301][301];
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            temparr[i][j] = arr[i][j];
+        }
+    }
+    for (int i = 0; i < d; i++)
+    {
+        pair<int, int> pnt = make_pair(i, i);
+        int nr = (r % ((2 * (n - i * 2) + 2 * (m - i * 2)) - 4));
+        for (int j = 0; j < nr; j++)
+        {
+            pair<int, int> curdirection;
+            if (pnt.first >= i && pnt.first < (n - i - 1) && pnt.second == i)
+                curdirection = directions[0];
+            else if (pnt.first == n - (i + 1) && pnt.second >= i && pnt.second < (m - i - 1))
+                curdirection = directions[1];
+            else if (pnt.first >= i + 1 && pnt.first < (n - i) && pnt.second == (m - i - 1))
+                curdirection = directions[2];
+            else if (pnt.first == i && pnt.second >= i + 1 && pnt.second <= (m - i - 1))
+                curdirection = directions[3];
+            pnt.first += curdirection.first;
+            pnt.second += curdirection.second;
+        }
+        pair<int, int> tempdirection = {i, i};
+        for (int j = 0; j < ((2 * (n - i * 2) + 2 * (m - i * 2)) - 4); j++)
+        {
+            pair<int, int> curdirection;
+            if (pnt.first >= i && pnt.first < (n - i - 1) && pnt.second == i)
+                curdirection = directions[0];
+            else if (pnt.first == n - (i + 1) && pnt.second >= i && pnt.second < (m - i - 1))
+                curdirection = directions[1];
+            else if (pnt.first >= i + 1 && pnt.first < (n - i) && pnt.second == (m - i - 1))
+                curdirection = directions[2];
+            else if (pnt.first == i && pnt.second >= i + 1 && pnt.second <= (m - i - 1))
+                curdirection = directions[3];
+            pnt.first += curdirection.first;
+            pnt.second += curdirection.second;
+            if (tempdirection.first >= i && tempdirection.first < (n - i - 1) && tempdirection.second == i)
+                curdirection = directions[0];
+            else if (tempdirection.first == n - (i + 1) && tempdirection.second >= i && tempdirection.second < (m - i - 1))
+                curdirection = directions[1];
+            else if (tempdirection.first >= i + 1 && tempdirection.first < (n - i) && tempdirection.second == (m - i - 1))
+                curdirection = directions[2];
+            else if (tempdirection.first == i && tempdirection.second >= i + 1 && tempdirection.second <= (m - i - 1))
+                curdirection = directions[3];
+            tempdirection.first += curdirection.first;
+            tempdirection.second += curdirection.second;
+            arr[pnt.first][pnt.second] = temparr[tempdirection.first][tempdirection.second];
+        }
+    }
+    return;
+}
