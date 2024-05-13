@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+pair<int, int> graph[51][51];
+int n, m;
+int r, c, d;
+pair<int, int> directions[4] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+int main()
+{
+    cin >> n >> m;
+    cin >> r >> c >> d;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            int x; cin >> x;
+            if (x == 0) graph[i][j] = {0, 0};
+            else if (x == 1) graph[i][j] = {1, 1};
+        }
+    }
+    pair<int, int> pos = {r, c};
+    pair<int, int> curdirection = directions[d];
+    int res = 0;
+    while (true)
+    {
+        if (graph[pos.first][pos.second] == make_pair(0, 0))
+        {
+            res++;
+            graph[pos.first][pos.second] = make_pair(1, 0);
+        }
+        bool check = false;
+        for (int i = 0; i < 4; i++)
+        {
+            pair<int, int> temp = directions[i];
+            if (graph[pos.first + temp.first][pos.second + temp.second] == make_pair(0, 0))
+            {
+                check = true;
+                break;
+            }
+        }
+        if(check)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                d = (d + 3) % 4;
+                curdirection = directions[d];
+                if (graph[pos.first + curdirection.first][pos.second + curdirection.second] == make_pair(0, 0))
+                {
+                    pos = make_pair(pos.first + curdirection.first, pos.second + curdirection.second);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            if (graph[pos.first - curdirection.first][pos.second - curdirection.second] == make_pair(1, 1))
+                break;
+            pos = {pos.first - curdirection.first, pos.second - curdirection.second};
+        }
+    }
+    cout << res;
+    return 0;
+}
