@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int arr[501];
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+    int t; cin >> t;
+    for (int x = 0; x < t; x++)
+    {
+        int n; cin >> n;
+        for (int i = 0; i < n; i++)
+            cin >> arr[i];
+        int res = 0;
+        for (int i = 0; i < n; i++)
+        {
+            vector<int> dp;
+            dp.push_back(arr[i]);
+            res += dp.size();
+            for (int y = i + 1; y < n; y++)
+            {
+                int k = arr[y];
+                if (k > *(--dp.end())) dp.push_back(k);
+                else *lower_bound(dp.begin(), dp.end(), k) = k;
+                res += dp.size();
+            }
+        }
+        cout << "Case #" << x + 1 << ": " << res << '\n';
+    }
+    return 0;
+}
