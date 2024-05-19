@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+int arr[8001];
+int main()
+{
+    int n; cin >> n;
+    vector<int> v(n);
+    for (int& a : v) cin >> a;
+    sort(v.begin(), v.end());
+    vector<int> res;
+    int average = 0;
+    for (int i = 0; i < n; i++)
+        average += v[i];
+    average = floor(double(average) / double(n) + 0.5);
+    res.push_back(average);
+
+    res.push_back(v[n / 2]);
+    for (int i = 0; i < n; i++)
+        arr[v[i] + 4000]++;
+    int max = 0;
+    for (int i = 0; i < 8001; i++)
+        max = max > arr[i] ? max : arr[i];
+    vector<int> cnt;
+    for (int i = 0; i < 8001; i++)
+    {
+        if (arr[i] == max)
+            cnt.push_back(i - 4000);
+    }
+    int mode;
+    if (cnt.size() == 1) mode = cnt[0];
+    else
+    {
+        sort(cnt.begin(), cnt.end());
+        mode = cnt[1];
+    }
+    res.push_back(mode);
+
+    res.push_back(*(--v.end()) - *v.begin());
+    for (int i : res) cout << i << '\n';
+}   
