@@ -1,0 +1,39 @@
+#include <iostream>
+#include <deque>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+    int t; cin >> t;
+    while(t--)
+    {
+        int n, k; cin >> n >> k;
+        deque<int> dq(n);
+        for (int& i : dq) cin >> i;
+        int maxp = *max_element(dq.begin(), dq.end()), num = 1;
+        while (!dq.empty())
+        {
+            if (dq.front() == maxp)
+            {
+                if (k == 0)
+                {
+                    cout << num << '\n';
+                    break;
+                }
+                dq.pop_front();
+                num++;
+                k--;
+                maxp = *max_element(dq.begin(), dq.end());
+            }
+            else
+            {
+                dq.push_back(dq.front());
+                dq.pop_front();
+                k = (k - 1 + dq.size()) % dq.size();
+            }
+        }
+    }
+    return 0;
+}
