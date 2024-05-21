@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+    int n, m, b; cin >> n >> m >> b;
+    int a[n][m];
+    int max = -1, min = 64000001;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            int x; cin >> x;
+            a[i][j] = x;
+            if (x > max) max = x;
+            if (x < min) min = x;
+        }
+    }
+    int res = 2147483647;
+    int reslevel = -1;
+    int d = max - min + 1;
+    for (int i = d - 1; i >= 0; i--)
+    {
+        int curlevel = min + i;
+        int curres = 0;
+        int curb = b;
+        bool pos = true;
+        for (int j = 0; j < n; j++)
+        {
+            for (int k = 0; k < m; k++)
+            {
+                if (a[j][k] > curlevel)
+                {
+                    curres += (a[j][k] - curlevel) * 2;
+                    curb += (a[j][k] - curlevel);
+                }
+            }
+        }
+        for (int j = 0; j < n; j++)
+        {
+            for (int k = 0; k < m; k++)
+            {
+                if (a[j][k] < curlevel)
+                {
+                    int diff = curlevel - a[j][k];
+                    if (curb < diff)
+                    {
+                        pos = false;
+                        break;
+                    }
+                    curres += diff;
+                    curb -= diff;
+                }
+            }
+            if (pos == false) break;
+        }
+        if (curres < res && pos)
+        {
+            res = curres;
+            reslevel = curlevel;
+        }
+    }
+    cout << res << ' ' << reslevel;
+    return 0;
+}
